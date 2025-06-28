@@ -25,7 +25,7 @@ export async function signup(req, res) {
       return res.status(400).json({ message: "Email already exists, please use a diffrent one" });
     }
 
-    const idx = Math.floor(Math.random() * 100) + 1; // generate a num between 1-100
+    const idx = Math.floor(Math.random() * 100) + 1; // will generate a num between 1-100
     const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`;
 
     const newUser = await User.create({
@@ -52,9 +52,9 @@ export async function signup(req, res) {
 
     res.cookie("jwt", token, {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true, // prevent XSS attacks,
-      sameSite: "strict", // prevent CSRF attacks
-      secure: process.env.NODE_ENV === "production",
+      httpOnly: true, //done to prevent XSS attacks, currently on development only 
+      sameSite: "strict", // done to prevent CSRF attacks
+      secure: process.env.NODE_ENV === "production", // will be https only when in production 
     });
 
     res.status(201).json({ success: true, user: newUser });
